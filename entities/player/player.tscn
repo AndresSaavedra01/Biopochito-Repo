@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://c4c8u5jewmfio"]
+
+[ext_resource type="Script" uid="uid://c7rgvyu4ni2le" path="res://entities/player/player.gd" id="1_symyc"]
+[ext_resource type="Script" uid="uid://drqguwo23384i" path="res://components/movement_component/movement_component.gd" id="2_abrql"]
+[ext_resource type="Script" uid="uid://buwjwibiaqn6g" path="res://components/input_handler_component/input_handler_component.gd" id="2_sglur"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_11408"]
+albedo_color = Color(0.34509805, 0.60784316, 1, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_d6w4w"]
+material = SubResource("StandardMaterial3D_11408")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jc0kb"]
+albedo_color = Color(1, 0.2627451, 0.30588236, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_d6w4w"]
+material = SubResource("StandardMaterial3D_jc0kb")
+size = Vector3(0.5991821, 0.23876953, 0.59277344)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jc0kb"]
+
+[node name="Player" type="CharacterBody3D" unique_id=664285927 node_paths=PackedStringArray("move_component", "input_component")]
+script = ExtResource("1_symyc")
+move_component = NodePath("MovementComponent")
+input_component = NodePath("InputHandlerComponent")
+
+[node name="body" type="Node3D" parent="." unique_id=995973166]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="body" unique_id=921716085]
+mesh = SubResource("CapsuleMesh_d6w4w")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="body" unique_id=935974295]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0066833496, 0.5835032, -0.27632403)
+mesh = SubResource("BoxMesh_d6w4w")
+
+[node name="RayCast3D" type="RayCast3D" parent="body" unique_id=971554146]
+transform = Transform3D(5.14, 0, 0, 0, 5.14, 0, 0, 0, 5.14, 0, 0, 0)
+target_position = Vector3(0, -20.57, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1644458842]
+shape = SubResource("CapsuleShape3D_jc0kb")
+
+[node name="InputHandlerComponent" type="Node" parent="." unique_id=506698664]
+script = ExtResource("2_sglur")
+metadata/_custom_type_script = "uid://buwjwibiaqn6g"
+
+[node name="MovementComponent" type="Node" parent="." unique_id=688602545 node_paths=PackedStringArray("character", "visual_node")]
+script = ExtResource("2_abrql")
+character = NodePath("..")
+visual_node = NodePath("../body")
+metadata/_custom_type_script = "uid://drqguwo23384i"
+
+[connection signal="jump_pressed" from="InputHandlerComponent" to="." method="_on_input_handler_component_jump_pressed"]

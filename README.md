@@ -295,37 +295,37 @@ var current_health: float
 
 
 func _ready() -> void:
-    current_health = max_health
+	current_health = max_health
 
 
 func take_damage(amount: float) -> void:
-    if amount <= 0.0 or is_dead():
-        return
+	if amount <= 0.0 or is_dead():
+		return
 
-    current_health = maxf(current_health - amount, 0.0)
-    health_changed.emit(current_health, max_health)
+	current_health = maxf(current_health - amount, 0.0)
+	health_changed.emit(current_health, max_health)
 
-    if is_dead():
-        died.emit()
+	if is_dead():
+		died.emit()
 
 
 func heal(amount: float) -> void:
-    if amount <= 0.0 or is_dead():
-        return
+	if amount <= 0.0 or is_dead():
+		return
 
-    current_health = minf(current_health + amount, max_health)
-    health_changed.emit(current_health, max_health)
+	current_health = minf(current_health + amount, max_health)
+	health_changed.emit(current_health, max_health)
 
 
 func is_dead() -> bool:
-    return current_health <= 0.0
+	return current_health <= 0.0
 
 
 func get_health_percentage() -> float:
-    if max_health <= 0.0:
-        return 0.0
+	if max_health <= 0.0:
+		return 0.0
 
-    return current_health / max_health
+	return current_health / max_health
 ```
 
 En este ejemplo, `HealthComponent` gestiona exclusivamente la salud. No conoce la interfaz gráfica ni decide qué debe hacer la entidad cuando muere.
@@ -434,11 +434,11 @@ class_name WasteData
 extends Resource
 
 enum WasteCategory {
-    ORGANIC,
-    PLASTIC,
-    PAPER,
-    GLASS,
-    METAL
+	ORGANIC,
+	PLASTIC,
+	PAPER,
+	GLASS,
+	METAL
 }
 
 @export var waste_name: String
